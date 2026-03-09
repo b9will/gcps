@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Canadian Property Services | Premium Estate Care in Vancouver</title>
+    <meta name="description" content="Vancouver's premier property care provider. Expert pressure washing, window cleaning, exterior restoration, and custom holiday lighting for the finest homes and commercial properties.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-dark: #0D0D0D;
+            --bg-charcoal: #1A1A1A;
+            --bg-warm: #F5F0EB;
+            --copper: #C4956A;
+            --copper-light: #D4A97A;
+            --text-light: #E8E4DF;
+            --text-muted: #9A9590;
+            --text-dark: #2C2C2C;
+            --text-dark-muted: #6B6560;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Outfit', system-ui, sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--sans); font-weight: 300; color: var(--text-light); background: var(--bg-dark); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        button { cursor: pointer; font-family: inherit; border: none; background: none; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+        .container--narrow { max-width: 960px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+
+        /* Photo containers */
+        .photo-block {
+            width: 100%; height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-charcoal);
+        }
+        .photo-block img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-break .photo-block img { filter: brightness(.85); }
+
+        /* Reveals */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(.23,1,.32,1), transform 0.9s cubic-bezier(.23,1,.32,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: .12s; }
+        .reveal-delay-2 { transition-delay: .24s; }
+        .reveal-delay-3 { transition-delay: .36s; }
+
+        /* TOP BAR */
+        .top-bar { background: var(--copper); color: #fff; font-size: 0.8rem; font-weight: 400; letter-spacing: .06em; text-align: center; padding: .5rem 1rem; position: relative; z-index: 1001; white-space: nowrap; }
+        .top-bar a { color: #fff; font-weight: 500; }
+        .top-bar a:hover { text-decoration: underline; }
+
+        /* NAV */
+        .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1.25rem 0; transition: background .4s, padding .4s, box-shadow .4s; }
+        .nav.scrolled { background: rgba(13,13,13,.95); backdrop-filter: blur(12px); padding: .75rem 0; box-shadow: 0 1px 20px rgba(0,0,0,.3); }
+        .nav__inner { max-width: 1280px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,3rem); display: flex; align-items: center; justify-content: space-between; }
+        .nav__logo { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; letter-spacing: .03em; color: var(--text-light); }
+        .nav__logo span { color: var(--copper); }
+        .nav__links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+        .nav__links a { font-size: .82rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--text-light); transition: color .3s; position: relative; }
+        .nav__links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--copper); transition: width .3s; }
+        .nav__links a:hover { color: var(--copper); }
+        .nav__links a:hover::after { width: 100%; }
+        .nav__cta { font-size: .78rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: var(--copper); padding: .65rem 1.5rem; transition: background .3s; white-space: nowrap; }
+        .nav__cta:hover { background: var(--copper-light); }
+        .nav__hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; z-index: 1002; }
+        .nav__hamburger span { display: block; width: 26px; height: 2px; background: var(--text-light); transition: transform .3s, opacity .3s; }
+        .nav__hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav__hamburger.active span:nth-child(2) { opacity: 0; }
+        .nav__hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-drawer { position: fixed; top: 0; right: -100%; width: 320px; max-width: 85vw; height: 100vh; background: var(--bg-charcoal); z-index: 1001; padding: 6rem 2rem 2rem; transition: right .4s cubic-bezier(.23,1,.32,1); display: flex; flex-direction: column; overflow-y: auto; }
+        .mobile-drawer.open { right: 0; }
+        .mobile-drawer a { display: block; font-family: var(--serif); font-size: 1.4rem; font-weight: 400; padding: .9rem 0; border-bottom: 1px solid rgba(255,255,255,.06); color: var(--text-light); transition: color .3s; }
+        .mobile-drawer a:hover { color: var(--copper); }
+        .mobile-drawer__cta { margin-top: 2rem; font-family: var(--sans) !important; font-size: .82rem !important; font-weight: 500 !important; letter-spacing: .1em; text-transform: uppercase; text-align: center; color: #fff !important; background: var(--copper); padding: .85rem 2rem; }
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 999; opacity: 0; pointer-events: none; transition: opacity .4s; }
+        .drawer-overlay.active { opacity: 1; pointer-events: all; }
+        @media(max-width:960px) { .nav__links { display: none; } .nav__hamburger { display: flex; } }
+
+        /* HERO */
+        .hero { position: relative; min-height: 100vh; display: flex; align-items: flex-end; overflow: hidden; }
+        .hero__bg { position: absolute; inset: 0; z-index: 0; }
+        .hero__bg .photo-block img { transform: scale(1.05); animation: heroZoom 15s ease-out forwards; }
+        @keyframes heroZoom { to { transform: scale(1); } }
+        .hero__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,.92) 0%, rgba(13,13,13,.55) 40%, rgba(13,13,13,.25) 70%, rgba(13,13,13,.15) 100%); z-index: 1; }
+        .hero__content { position: relative; z-index: 2; padding: 0 clamp(1.25rem,4vw,3rem) clamp(4rem,8vh,7rem); max-width: 820px; }
+        .hero__tag { font-size: .72rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--copper); margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px); animation: fadeUp 1s .3s forwards; }
+        .hero__heading { font-family: var(--serif); font-size: clamp(2.6rem,6vw,5rem); font-weight: 300; line-height: 1.1; color: #fff; margin-bottom: 1.25rem; opacity: 0; transform: translateY(30px); animation: fadeUp 1s .5s forwards; }
+        .hero__heading em { font-style: italic; color: var(--copper); }
+        .hero__sub { font-size: clamp(.95rem,1.5vw,1.1rem); font-weight: 300; line-height: 1.7; color: var(--text-muted); max-width: 560px; margin-bottom: 2.25rem; opacity: 0; transform: translateY(30px); animation: fadeUp 1s .7s forwards; }
+        .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; opacity: 0; transform: translateY(20px); animation: fadeUp 1s .9s forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* BUTTONS */
+        .btn { display: inline-block; font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; padding: .9rem 2rem; transition: all .3s; }
+        .btn--primary { background: var(--copper); color: #fff; }
+        .btn--primary:hover { background: var(--copper-light); }
+        .btn--outline { border: 1px solid rgba(255,255,255,.25); color: var(--text-light); }
+        .btn--outline:hover { border-color: var(--copper); color: var(--copper); }
+        .btn--dark { background: var(--bg-charcoal); color: var(--text-light); }
+        .btn--dark:hover { background: var(--copper); color: #fff; }
+
+        /* SECTIONS */
+        .section { padding: clamp(5rem,10vh,8rem) 0; }
+        .section--dark { background: var(--bg-dark); }
+        .section--charcoal { background: var(--bg-charcoal); }
+        .section--light { background: var(--bg-warm); color: var(--text-dark); }
+        .section__tag { font-size: .7rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--copper); margin-bottom: 1rem; }
+        .section__heading { font-family: var(--serif); font-size: clamp(2rem,4vw,3.2rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.25rem; }
+        .section__heading em { font-style: italic; }
+        .section--light .section__heading { color: var(--text-dark); }
+        .section__body { font-size: .98rem; line-height: 1.8; color: var(--text-muted); max-width: 640px; }
+        .section--light .section__body { color: var(--text-dark-muted); }
+        .sep { width: 60px; height: 1px; background: var(--copper); margin: 1.5rem 0; }
+
+        /* TRUST BAR */
+        .trust-bar { background: var(--bg-charcoal); border-top: 1px solid rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.04); padding: 3rem 0; }
+        .trust-bar__inner { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; text-align: center; }
+        .trust-item__label { font-size: .72rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--copper); margin-bottom: .4rem; }
+        .trust-item__value { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--text-light); }
+        @media(max-width:768px) { .trust-bar__inner { grid-template-columns: repeat(2,1fr); } }
+        @media(max-width:480px) { .trust-bar__inner { grid-template-columns: 1fr; } }
+
+        /* IMAGE BREAK */
+        .image-break { position: relative; height: clamp(240px,35vh,420px); overflow: hidden; }
+        .image-break .photo-block::after { background: rgba(13,13,13,.1); }
+
+        /* SPLIT LAYOUT */
+        .services-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 560px; }
+        .services-split__image { position: relative; overflow: hidden; }
+        .services-split__content { display: flex; flex-direction: column; justify-content: center; padding: clamp(2.5rem,5vw,5rem); }
+        .service-list { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
+        .service-list__item { font-size: .88rem; line-height: 1.5; padding-left: 1rem; border-left: 1px solid var(--copper); }
+        .service-list__item strong { display: block; font-weight: 500; color: var(--text-light); margin-bottom: .15rem; }
+        .service-list__item span { color: var(--text-muted); font-size: .82rem; }
+        .services-split--reverse .services-split__image { order: 2; }
+        .services-split--reverse .services-split__content { order: 1; }
+        @media(max-width:768px) {
+            .services-split { grid-template-columns: 1fr; }
+            .services-split__image { height: 300px; }
+            .service-list { grid-template-columns: 1fr; }
+            .services-split--reverse .services-split__image { order: 0; }
+            .services-split--reverse .services-split__content { order: 1; }
+        }
+
+        /* COMMERCIAL */
+        .commercial-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+        .commercial-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); padding: 2rem; transition: border-color .3s, transform .3s; }
+        .commercial-card:hover { border-color: var(--copper); transform: translateY(-4px); }
+        .commercial-card__title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; margin-bottom: .5rem; }
+        .commercial-card__text { font-size: .85rem; color: var(--text-muted); line-height: 1.7; }
+        @media(max-width:768px) { .commercial-grid { grid-template-columns: 1fr; } }
+
+        /* CHRISTMAS */
+        .christmas { position: relative; min-height: 75vh; display: flex; align-items: center; overflow: hidden; }
+        .christmas__bg { position: absolute; inset: 0; }
+        .christmas__overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,13,13,.88) 0%, rgba(13,13,13,.55) 100%); z-index: 1; }
+        .christmas__content { position: relative; z-index: 2; max-width: 620px; padding: clamp(3rem,6vw,6rem) clamp(1.25rem,4vw,3rem); }
+        .christmas__features { margin-top: 2rem; display: flex; flex-direction: column; gap: .75rem; }
+        .christmas__feature { display: flex; align-items: center; gap: .75rem; font-size: .92rem; color: var(--text-muted); }
+        .christmas__feature::before { content: ''; width: 24px; height: 1px; background: var(--copper); flex-shrink: 0; }
+
+        /* REVIEWS */
+        .reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3rem; }
+        .review-card { background: #fff; padding: 2.25rem; }
+        .review-card__stars { color: #FBBC04; font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; }
+        .review-card__text { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 400; line-height: 1.7; color: var(--text-dark); margin-bottom: 1.5rem; }
+        .review-card__author { font-size: .82rem; font-weight: 500; color: var(--text-dark); }
+        .review-card__location { font-size: .78rem; color: var(--text-dark-muted); }
+        .review-card__source { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: var(--text-dark-muted); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; }
+        .google-badge { display: inline-flex; align-items: center; gap: .75rem; background: #fff; padding: 1rem 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,.08); margin-bottom: 2rem; }
+        .google-badge__stars { color: #FBBC04; font-size: 1.1rem; }
+        .google-badge__rating { font-size: .85rem; font-weight: 500; color: var(--text-dark); }
+        .g-icon { display: inline-block; width: 16px; height: 16px; background: conic-gradient(from -45deg, #ea4335 90deg, #fbbc04 90deg 180deg, #34a853 180deg 270deg, #4285f4 270deg); border-radius: 50%; position: relative; }
+        .g-icon::after { content: 'G'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
+        @media(max-width:768px) { .reviews-grid { grid-template-columns: 1fr; } }
+
+        /* AREAS */
+        .areas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); gap: .75rem; margin-top: 2.5rem; }
+        .area-item { padding: 1rem 1.25rem; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); font-size: .88rem; transition: border-color .3s; }
+        .area-item:hover { border-color: var(--copper); }
+        .areas-note { margin-top: 2rem; font-size: .88rem; color: var(--text-muted); }
+        .areas-note a { color: var(--copper); text-decoration: underline; }
+
+        /* FAQ */
+        .faq-item { border-bottom: 1px solid rgba(0,0,0,.08); }
+        .faq-item__question { width: 100%; text-align: left; font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--text-dark); padding: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; gap: 1rem; transition: color .3s; }
+        .faq-item__question:hover { color: var(--copper); }
+        .faq-item__icon { width: 20px; height: 20px; flex-shrink: 0; position: relative; }
+        .faq-item__icon::before, .faq-item__icon::after { content: ''; position: absolute; background: var(--text-dark-muted); transition: transform .3s; }
+        .faq-item__icon::before { width: 100%; height: 1px; top: 50%; left: 0; }
+        .faq-item__icon::after { width: 1px; height: 100%; left: 50%; top: 0; }
+        .faq-item.active .faq-item__icon::after { transform: rotate(90deg); }
+        .faq-item__answer { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+        .faq-item.active .faq-item__answer { max-height: 300px; }
+        .faq-item__answer p { font-size: .92rem; line-height: 1.8; color: var(--text-dark-muted); padding-bottom: 1.5rem; }
+
+        /* FINAL CTA */
+        .final-cta { position: relative; padding: clamp(5rem,12vh,9rem) 0; text-align: center; background: var(--bg-dark); overflow: hidden; }
+        .final-cta::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(196,149,106,.08) 0%, transparent 70%); pointer-events: none; }
+        .final-cta__heading { font-family: var(--serif); font-size: clamp(2.2rem,4.5vw,3.6rem); font-weight: 300; color: #fff; margin-bottom: 1rem; }
+        .final-cta__heading em { font-style: italic; color: var(--copper); }
+        .final-cta__sub { font-size: .95rem; color: var(--text-muted); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .final-cta__actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+
+        /* FOOTER */
+        .footer { background: var(--bg-charcoal); border-top: 1px solid rgba(255,255,255,.04); padding: 4rem 0 2rem; }
+        .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+        .footer__brand-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
+        .footer__brand-name span { color: var(--copper); }
+        .footer__brand p { font-size: .85rem; line-height: 1.7; color: var(--text-muted); max-width: 320px; }
+        .footer__heading { font-size: .7rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--copper); margin-bottom: 1.25rem; }
+        .footer__link { display: block; font-size: .85rem; color: var(--text-muted); padding: .3rem 0; transition: color .3s; }
+        .footer__link:hover { color: var(--copper); }
+        .footer__bottom { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer__copy { font-size: .78rem; color: var(--text-muted); }
+        .footer__legal { display: flex; gap: 1.5rem; }
+        .footer__legal a { font-size: .78rem; color: var(--text-muted); transition: color .3s; }
+        .footer__legal a:hover { color: var(--copper); }
+        @media(max-width:768px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
+        @media(max-width:480px) { .footer__grid { grid-template-columns: 1fr; } }
+
+
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+    Call us today: <a href="tel:6042606285">604-260-6285</a>&nbsp;&nbsp;|&nbsp;&nbsp;Serving Vancouver &amp; the Greater Lower Mainland
+</div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <div class="nav__inner">
+        <a href="#" class="nav__logo">Great Canadian <span>Property Services</span></a>
+        <ul class="nav__links">
+            <li><a href="#residential">Residential</a></li>
+            <li><a href="#commercial">Commercial</a></li>
+            <li><a href="#concrete">Concrete Care</a></li>
+            <li><a href="#christmas">Holiday Lighting</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://www.greatcanadianpropertyservices.ca/contact-us" class="nav__cta" target="_blank" rel="noopener">Get Quote</a></li>
+        </ul>
+        <button class="nav__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+    <a href="#residential" class="drawer-link">Residential</a>
+    <a href="#commercial" class="drawer-link">Commercial</a>
+    <a href="#concrete" class="drawer-link">Concrete Care</a>
+    <a href="#christmas" class="drawer-link">Holiday Lighting</a>
+    <a href="#reviews" class="drawer-link">Reviews</a>
+    <a href="#faq" class="drawer-link">FAQ</a>
+    <a href="https://www.greatcanadianpropertyservices.ca/contact-us" class="mobile-drawer__cta drawer-link" target="_blank" rel="noopener">Request Assessment</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+    <div class="hero__bg">
+        <div class="photo-block">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&auto=format" alt="Luxury home exterior at dusk" loading="eager">
+        </div>
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+        <p class="hero__tag">Vancouver's Premier Property Care</p>
+        <h1 class="hero__heading">Exceptional Care for<br><em>Exceptional Properties</em></h1>
+        <p class="hero__sub">Expert pressure washing, window cleaning, exterior restoration, and custom holiday lighting for Vancouver's finest homes and commercial properties.</p>
+        <div class="hero__actions">
+            <a href="https://www.greatcanadianpropertyservices.ca/contact-us" class="btn btn--primary" target="_blank" rel="noopener">Request a Property Assessment</a>
+            <a href="#residential" class="btn btn--outline">Explore Our Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Trust Bar -->
+<div class="trust-bar">
+    <div class="container">
+        <div class="trust-bar__inner reveal">
+            <div class="trust-item"><div class="trust-item__label">Rating</div><div class="trust-item__value">5.0 Stars on Google</div></div>
+            <div class="trust-item"><div class="trust-item__label">Coverage</div><div class="trust-item__value">14 Communities</div></div>
+            <div class="trust-item"><div class="trust-item__label">Assurance</div><div class="trust-item__value">Fully Insured &amp; Licensed</div></div>
+            <div class="trust-item"><div class="trust-item__label">Commitment</div><div class="trust-item__value">Satisfaction Guaranteed</div></div>
+            <div class="trust-item"><div class="trust-item__label">Assessments</div><div class="trust-item__value">Always Complimentary</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Residential -->
+<section class="section--dark" id="residential">
+    <div class="services-split">
+        <div class="services-split__image reveal">
+            <div class="photo-block">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&auto=format" alt="Beautiful luxury home with manicured landscaping" loading="lazy">
+            </div>
+        </div>
+        <div class="services-split__content">
+            <div class="reveal">
+                <p class="section__tag">Residential Services</p>
+                <h2 class="section__heading">Your Home Deserves<br><em>the Finest Care</em></h2>
+                <div class="sep"></div>
+                <p class="section__body">From gentle soft washing that restores your exterior to streak-free window cleaning that frames every view, we deliver meticulous results that protect your investment and elevate your curb appeal. Every service uses eco-friendly solutions and professional-grade equipment, custom-tailored to your property's unique surfaces.</p>
+            </div>
+            <div class="service-list reveal reveal-delay-1">
+                <div class="service-list__item"><strong>House Washing</strong><span>Soft wash restoration for siding, trim, and exterior surfaces</span></div>
+                <div class="service-list__item"><strong>Roof Cleaning</strong><span>Safe removal of moss, lichen, algae, and gloeocapsa magma</span></div>
+                <div class="service-list__item"><strong>Window Cleaning</strong><span>Water-fed pole and squeegee methods for flawless clarity</span></div>
+                <div class="service-list__item"><strong>Driveway Cleaning</strong><span>Revitalized curb appeal and elimination of slip hazards</span></div>
+                <div class="service-list__item"><strong>Patio Cleaning</strong><span>Custom-tailored care for any surface material</span></div>
+                <div class="service-list__item"><strong>Gutter Cleaning</strong><span>Thorough clearing and brightening of exterior gutters</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Break -->
+<div class="image-break">
+    <div class="photo-block"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80&auto=format" alt="Pristine floor-to-ceiling glass windows" loading="lazy"></div>
+</div>
+
+<!-- Concrete -->
+<section class="section--dark" id="concrete">
+    <div class="services-split services-split--reverse">
+        <div class="services-split__image reveal">
+            <div class="photo-block"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1920&q=80&auto=format" alt="Clean luxury driveway and property entrance" loading="lazy"></div>
+        </div>
+        <div class="services-split__content">
+            <div class="reveal">
+                <p class="section__tag">Concrete &amp; Paver Care</p>
+                <h2 class="section__heading">Protect Your<br><em>Hardscape Investment</em></h2>
+                <div class="sep"></div>
+                <p class="section__body">Porous concrete and pavers weaken over time without proper protection. Our cleaning and sealing services create a durable barrier against moisture, organic growth, UV damage, and staining, preserving the beauty and structural integrity of your surfaces for years to come.</p>
+            </div>
+            <div class="service-list reveal reveal-delay-1">
+                <div class="service-list__item"><strong>Concrete Cleaning</strong><span>Professional-grade removal of stains, organic growth, and grime</span></div>
+                <div class="service-list__item"><strong>Paver Sanding</strong><span>Restoring joint stability and surface integrity</span></div>
+                <div class="service-list__item"><strong>Concrete Sealing</strong><span>Protective barrier against moisture, UV, and organic growth</span></div>
+                <div class="service-list__item"><strong>Paver Sealing</strong><span>Enhances colour, texture, and long-term durability</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Commercial -->
+<section class="section section--charcoal" id="commercial">
+    <div class="container">
+        <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto;">
+            <p class="section__tag">Commercial &amp; Industrial</p>
+            <h2 class="section__heading">Tailored Solutions for<br><em>Professional Properties</em></h2>
+            <div class="sep" style="margin:1.5rem auto;"></div>
+            <p class="section__body" style="margin:0 auto;">We work closely with business owners, property managers, and maintenance teams to deliver customized cleaning programs that minimize disruption and maintain the professional appearance your business demands.</p>
+        </div>
+        <div class="commercial-grid reveal reveal-delay-1">
+            <div class="commercial-card"><h3 class="commercial-card__title">Building Washing</h3><p class="commercial-card__text">Comprehensive exterior cleaning for office buildings, shopping centres, and strata complexes, restoring facades to their original condition.</p></div>
+            <div class="commercial-card"><h3 class="commercial-card__title">Commercial Windows</h3><p class="commercial-card__text">Storefront and multi-level window cleaning with water-fed pole systems and traditional squeegee techniques for spotless results.</p></div>
+            <div class="commercial-card"><h3 class="commercial-card__title">Rooftop Cleaning</h3><p class="commercial-card__text">Safe removal of debris, algae, and organic growth from commercial roofing systems, extending material lifespan.</p></div>
+            <div class="commercial-card"><h3 class="commercial-card__title">Fleet Washing</h3><p class="commercial-card__text">Keep your company vehicles looking sharp. Professional fleet washing that maintains your brand image on the road.</p></div>
+            <div class="commercial-card"><h3 class="commercial-card__title">Industrial Cleaning</h3><p class="commercial-card__text">Heavy-duty pressure washing for warehouses, industrial facilities, loading docks, and manufacturing environments.</p></div>
+            <div class="commercial-card"><h3 class="commercial-card__title">Gutter Brightening</h3><p class="commercial-card__text">Thorough gutter cleaning and exterior brightening that protects your building and improves its overall appearance.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Break -->
+<div class="image-break">
+    <div class="photo-block"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80&auto=format" alt="Modern commercial building exterior" loading="lazy"></div>
+</div>
+
+<!-- Christmas -->
+<section class="christmas" id="christmas">
+    <div class="christmas__bg"><div class="photo-block"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1920&q=80&auto=format" alt="Luxury home with warm evening lighting" loading="lazy"></div></div>
+    <div class="christmas__overlay"></div>
+    <div class="christmas__content">
+        <div class="reveal">
+            <p class="section__tag">Holiday Lighting</p>
+            <h2 class="section__heading" style="color:#fff;">Make Your Home<br><em>the Envy of the Street</em></h2>
+            <div class="sep"></div>
+            <p class="section__body">From elegant twinkling displays to celebratory inflatables and festive decor, we handle every detail so you can enjoy the season with your feet firmly on the ground. Full-service from concept to storage.</p>
+        </div>
+        <div class="christmas__features reveal reveal-delay-1">
+            <div class="christmas__feature">Custom holiday light design tailored to your home</div>
+            <div class="christmas__feature">Professional installation by trained specialists</div>
+            <div class="christmas__feature">Maintenance and repairs throughout the season</div>
+            <div class="christmas__feature">Careful removal to protect your roof and property</div>
+            <div class="christmas__feature">Secure off-season storage included</div>
+        </div>
+        <div class="reveal reveal-delay-2" style="margin-top:2.5rem;">
+            <a href="https://www.greatcanadianpropertyservices.ca/contact-us" class="btn btn--primary" target="_blank" rel="noopener">Plan Your Display</a>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews -->
+<section class="section section--light" id="reviews">
+    <div class="container">
+        <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
+            <p class="section__tag">Client Testimonials</p>
+            <h2 class="section__heading"><em>Trusted</em> by Vancouver's<br>Finest Properties</h2>
+            <div class="sep" style="margin:1.5rem auto;"></div>
+        </div>
+        <div style="text-align:center;" class="reveal reveal-delay-1">
+            <a href="https://www.google.com/maps?cid=14568573342021237088" target="_blank" rel="noopener" class="google-badge">
+                <span class="g-icon"></span>
+                <span class="google-badge__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                <span class="google-badge__rating">5.0 Rating on Google</span>
+            </a>
+        </div>
+        <div class="reviews-grid reveal reveal-delay-2">
+            <div class="review-card">
+                <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="review-card__text">"They did an incredible job on our driveway and patio. Everything looks brand new. Professional, on time, and very thorough. We will definitely be calling them again."</p>
+                <p class="review-card__author">Mark T.</p>
+                <p class="review-card__location">Surrey, BC</p>
+                <div class="review-card__source"><span class="g-icon"></span> Posted on Google</div>
+            </div>
+            <div class="review-card">
+                <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="review-card__text">"Our Christmas lights were absolutely stunning. The whole neighbourhood commented on them. Installation was quick and they came back right away to take everything down after the holidays."</p>
+                <p class="review-card__author">Jennifer L.</p>
+                <p class="review-card__location">White Rock, BC</p>
+                <div class="review-card__source"><span class="g-icon"></span> Posted on Google</div>
+            </div>
+            <div class="review-card">
+                <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="review-card__text">"We manage several strata properties and Great Canadian handles all of our exterior cleaning. Reliable, communicative, and always deliver quality work. Highly recommend for commercial clients."</p>
+                <p class="review-card__author">David R.</p>
+                <p class="review-card__location">Richmond, BC</p>
+                <div class="review-card__source"><span class="g-icon"></span> Posted on Google</div>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;" class="reveal reveal-delay-3">
+            <a href="https://birdeye.com/great-canadian-property-services-176098426886337/review-us?dashboard=1" class="btn btn--dark" target="_blank" rel="noopener">Leave Us a Review</a>
+        </div>
+    </div>
+</section>
+
+<!-- Service Areas -->
+<section class="section section--dark" id="areas">
+    <div class="container">
+        <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
+            <p class="section__tag">Service Areas</p>
+            <h2 class="section__heading">Serving <em>14 Communities</em><br>Across Greater Vancouver</h2>
+            <div class="sep" style="margin:1.5rem auto;"></div>
+            <p class="section__body" style="margin:0 auto;">From the Sea to Sky corridor to the Fraser Valley, we provide complimentary property assessments throughout the Lower Mainland.</p>
+        </div>
+        <div class="areas-grid reveal reveal-delay-1">
+            <div class="area-item">Vancouver</div>
+            <div class="area-item">Surrey</div>
+            <div class="area-item">North Vancouver</div>
+            <div class="area-item">West Vancouver</div>
+            <div class="area-item">Richmond</div>
+            <div class="area-item">Coquitlam</div>
+            <div class="area-item">Delta</div>
+            <div class="area-item">Langley</div>
+            <div class="area-item">White Rock</div>
+            <div class="area-item">Maple Ridge</div>
+            <div class="area-item">Abbotsford</div>
+            <div class="area-item">Chilliwack</div>
+            <div class="area-item">Squamish</div>
+            <div class="area-item">Whistler</div>
+        </div>
+        <p class="areas-note reveal reveal-delay-2">Don't see your area? Call us at <a href="tel:6042606285">604-260-6285</a> and we will let you know if we can help.</p>
+    </div>
+</section>
+
+<!-- Image Break -->
+<div class="image-break">
+    <div class="photo-block"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1920&q=80&auto=format" alt="Beautiful outdoor patio and living space" loading="lazy"></div>
+</div>
+
+<!-- FAQ -->
+<section class="section section--light" id="faq">
+    <div class="container--narrow">
+        <div class="reveal" style="text-align:center;">
+            <p class="section__tag">Frequently Asked Questions</p>
+            <h2 class="section__heading"><em>Answers</em> to Common Questions</h2>
+            <div class="sep" style="margin:1.5rem auto;"></div>
+        </div>
+        <div class="faq-list reveal reveal-delay-1">
+            <div class="faq-item">
+                <button class="faq-item__question">What areas do you serve in the Vancouver region?<span class="faq-item__icon"></span></button>
+                <div class="faq-item__answer"><p>We serve homeowners and businesses across Vancouver, Surrey, North Vancouver, West Vancouver, Richmond, Coquitlam, Delta, Langley, White Rock, Maple Ridge, Abbotsford, Chilliwack, Squamish, and Whistler. If your area is not listed, give us a call and we will let you know if we can help.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-item__question">Can you take down my Christmas lights when the holidays pass?<span class="faq-item__icon"></span></button>
+                <div class="faq-item__answer"><p>Yes. We remove your holiday lighting as carefully as we install it, paying close attention to prevent damage to your roof or property. We also offer storage so you do not have to worry about space in your home. Our services are custom-tailored to your needs.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-item__question">What kind of businesses can you clean?<span class="faq-item__icon"></span></button>
+                <div class="faq-item__answer"><p>From shopping centres and office buildings to industrial facilities and warehouses to strata complexes, our commercial team has your property covered. We offer building washing, concrete cleaning and sealing, commercial roof cleaning, and more. We work closely with property managers, business owners, and maintenance crews to minimize disruption and maximize curb appeal.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-item__question">How does roof cleaning extend the life of my shingles?<span class="faq-item__icon"></span></button>
+                <div class="faq-item__answer"><p>Gloeocapsa magma is an aggressive organic growth that consumes shingles. Routine roof cleaning keeps it, along with lichen, moss, and other organisms, under control to protect your roof and extend its lifespan. Our solutions are safe for shingles, metal roofs, commercial roofing systems, and the local environment.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-item__question">Why should I seal my pavers?<span class="faq-item__icon"></span></button>
+                <div class="faq-item__answer"><p>Sealing brings out the colour and texture of your paver surfaces while protecting them from harsh weather, extreme temperatures, UV exposure, and moisture. Sealed pavers resist staining and organic growth and are easier to clean and maintain.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-item__question">Do you offer free estimates?<span class="faq-item__icon"></span></button>
+                <div class="faq-item__answer"><p>Yes. We provide complimentary, no-obligation property assessments for all of our services throughout the Greater Vancouver area, the Fraser Valley, and the Sea to Sky corridor.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+    <div class="container reveal">
+        <p class="section__tag" style="text-align:center;">Get Started</p>
+        <h2 class="final-cta__heading">Ready to <em>Elevate</em> Your Property?</h2>
+        <p class="final-cta__sub">Complimentary property assessments. No obligation. Serving 14 communities across the Greater Vancouver area.</p>
+        <div class="final-cta__actions">
+            <a href="https://www.greatcanadianpropertyservices.ca/contact-us" class="btn btn--primary" target="_blank" rel="noopener">Request a Property Assessment</a>
+            <a href="tel:6042606285" class="btn btn--outline">Call 604-260-6285</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer__grid">
+            <div class="footer__brand">
+                <div class="footer__brand-name">Great Canadian <span>Property Services</span></div>
+                <p>Vancouver's premier property care provider. Expert pressure washing, window cleaning, exterior restoration, and custom holiday lighting for the finest homes and commercial properties across the Lower Mainland.</p>
+                <p style="margin-top:1rem;">112-15428 31 Ave<br>Surrey, BC V3Z 3W4<br><a href="tel:6042606285" style="color:var(--copper);">604-260-6285</a><br><a href="mailto:info@greatcanadianpropertyservices.ca" style="color:var(--copper);">info@greatcanadianpropertyservices.ca</a></p>
+            </div>
+            <div>
+                <h4 class="footer__heading">Services</h4>
+                <a href="#residential" class="footer__link">House Washing</a>
+                <a href="#residential" class="footer__link">Roof Cleaning</a>
+                <a href="#residential" class="footer__link">Window Cleaning</a>
+                <a href="#concrete" class="footer__link">Concrete &amp; Paver Care</a>
+                <a href="#commercial" class="footer__link">Commercial Cleaning</a>
+                <a href="#christmas" class="footer__link">Holiday Lighting</a>
+            </div>
+            <div>
+                <h4 class="footer__heading">Service Areas</h4>
+                <a href="#areas" class="footer__link">Vancouver</a>
+                <a href="#areas" class="footer__link">Surrey</a>
+                <a href="#areas" class="footer__link">North Vancouver</a>
+                <a href="#areas" class="footer__link">West Vancouver</a>
+                <a href="#areas" class="footer__link">Richmond</a>
+                <a href="#areas" class="footer__link">Coquitlam</a>
+            </div>
+            <div>
+                <h4 class="footer__heading">Connect</h4>
+                <a href="https://www.google.com/maps?cid=14568573342021237088" class="footer__link" target="_blank" rel="noopener">Google Reviews</a>
+                <a href="https://birdeye.com/great-canadian-property-services-176098426886337/review-us?dashboard=1" class="footer__link" target="_blank" rel="noopener">Leave a Review</a>
+                <a href="https://www.greatcanadianpropertyservices.ca/contact-us" class="footer__link" target="_blank" rel="noopener">Contact Us</a>
+                <a href="https://www.greatcanadianpropertyservices.ca" class="footer__link" target="_blank" rel="noopener">Main Website</a>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p class="footer__copy">&copy; 2026 Great Canadian Property Services. All rights reserved.</p>
+            <div class="footer__legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+        </div>
+    </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav'),topBar=document.querySelector('.top-bar');
+let tbH=topBar.offsetHeight;
+function onScroll(){
+    if(window.scrollY>tbH+60)nav.classList.add('scrolled');else nav.classList.remove('scrolled');
+    if(window.scrollY>10){topBar.style.transform='translateY(-100%)';topBar.style.transition='transform .3s';nav.style.top='0';}
+    else{topBar.style.transform='translateY(0)';nav.style.top=tbH+'px';}
+}
+nav.style.top=tbH+'px';
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+const hamburger=document.getElementById('hamburger'),drawer=document.getElementById('mobileDrawer'),overlay=document.getElementById('drawerOverlay');
+function toggleDrawer(){hamburger.classList.toggle('active');drawer.classList.toggle('open');overlay.classList.toggle('active');document.body.style.overflow=drawer.classList.contains('open')?'hidden':'';}
+hamburger.addEventListener('click',toggleDrawer);overlay.addEventListener('click',toggleDrawer);
+document.querySelectorAll('.drawer-link').forEach(l=>l.addEventListener('click',()=>{if(drawer.classList.contains('open'))toggleDrawer();}));
+
+const ro=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible');});},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+document.querySelectorAll('.faq-item__question').forEach(btn=>{btn.addEventListener('click',()=>{const item=btn.parentElement,active=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));if(!active)item.classList.add('active');});});
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-80,behavior:'smooth'});}});});
+</script>
+</body>
+</html>
