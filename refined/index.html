@@ -228,6 +228,60 @@
         .image-break { position: relative; height: clamp(200px, 30vh, 380px); overflow: hidden; }
         .image-break img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.8); }
 
+        /* ── COMMERCIAL HERO ── */
+        .commercial-hero {
+            position: relative;
+            min-height: clamp(400px, 55vh, 560px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+        .commercial-hero__bg {
+            position: absolute; inset: 0; z-index: 0;
+        }
+        .commercial-hero__bg img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .commercial-hero__overlay {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(
+                to bottom,
+                rgba(13,13,13,.7) 0%,
+                rgba(13,13,13,.5) 50%,
+                rgba(247,243,239,1) 100%
+            );
+        }
+        .commercial-hero__content {
+            position: relative; z-index: 2;
+            max-width: 700px;
+            padding: clamp(3rem,6vw,5rem) clamp(1.25rem,4vw,3rem);
+        }
+        .commercial-hero__tag {
+            font-size: .7rem; font-weight: 500; letter-spacing: .25em;
+            text-transform: uppercase; color: var(--copper);
+            margin-bottom: 1rem;
+        }
+        .commercial-hero__heading {
+            font-family: var(--serif);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 300;
+            line-height: 1.1;
+            color: #fff;
+        }
+        .commercial-hero__heading em { font-style: italic; color: var(--copper); }
+        .commercial-hero__line {
+            width: 50px; height: 1px; background: var(--copper);
+            margin: 1.25rem auto;
+        }
+        .commercial-hero__sub {
+            font-size: clamp(.9rem, 1.3vw, 1rem);
+            font-weight: 300; line-height: 1.75;
+            color: var(--text-muted);
+            max-width: 520px; margin: 0 auto;
+        }
+
         /* ── COMMERCIAL SECTION (WARM / INVERTED) ── */
         .commercial-intro { max-width: 640px; }
         .commercial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
@@ -461,16 +515,26 @@
     </div>
 </section>
 
-<!-- ══ COMMERCIAL (WARM/INVERTED SECTION) ══ -->
-<section class="section section--warm" id="commercial">
-    <div class="container">
-        <div class="reveal commercial-intro">
-            <p class="section__tag">Premium Commercial Services</p>
-            <h2 class="section__heading">Effortless Ongoing Care for<br><em>Vancouver's Finest Properties</em></h2>
-            <div class="sep"></div>
-            <p class="section__body">We partner with owners and managers of luxury retail spaces, professional buildings, and boutique storefronts to maintain the polished appearance that reflects the calibre of your business. Customized programs designed to minimize disruption and uphold your standard.</p>
+<!-- ══ COMMERCIAL HERO ══ -->
+<section class="commercial-hero" id="commercial">
+    <div class="commercial-hero__bg">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80&auto=format" alt="Premium commercial building with clean glass facade" loading="lazy">
+    </div>
+    <div class="commercial-hero__overlay"></div>
+    <div class="commercial-hero__content">
+        <div class="reveal">
+            <p class="commercial-hero__tag">Premium Commercial Services</p>
+            <h2 class="commercial-hero__heading">Effortless Ongoing Care for<br><em>Vancouver's Finest Properties</em></h2>
+            <div class="commercial-hero__line"></div>
+            <p class="commercial-hero__sub">We partner with owners and managers of luxury retail spaces, professional buildings, and boutique storefronts to maintain the polished appearance that reflects the calibre of your business.</p>
         </div>
-        <div class="commercial-grid reveal reveal-d1">
+    </div>
+</section>
+
+<!-- ══ COMMERCIAL SERVICES (WARM/INVERTED SECTION) ══ -->
+<section class="section section--warm">
+    <div class="container">
+        <div class="commercial-grid reveal">
             <div class="commercial-card">
                 <h3 class="commercial-card__title">Building Washing</h3>
                 <p class="commercial-card__text">Comprehensive exterior care for office buildings, retail centres, and strata complexes. Maintaining facades at the standard your tenants and clients expect.</p>
@@ -496,17 +560,12 @@
                 <p class="commercial-card__text">Thorough gutter cleaning and exterior brightening that protects your building and maintains its overall presentation.</p>
             </div>
         </div>
-        <div class="commercial-sub reveal reveal-d2">
+        <div class="commercial-sub reveal reveal-d1">
             <div class="commercial-sub__title">Subscription Window Cleaning</div>
             <div class="commercial-sub__text">Streamlined, recurring window cleaning programs for commercial properties. Set your schedule, and we handle the rest. Consistent results, zero hassle, one less thing to manage.</div>
         </div>
     </div>
 </section>
-
-<!-- ══ IMAGE BREAK ══ -->
-<div class="image-break">
-    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80&auto=format" alt="Modern commercial building with clean glass facade" loading="lazy">
-</div>
 
 <!-- ══ PROCESS ══ -->
 <section class="section section--dark">
